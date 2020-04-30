@@ -18,6 +18,9 @@ public interface IUserService {
 
     int modifyUser_passByUserid(Users user);
 
+    List<Users> findUsersByName(String text, String username);
+
+
 //
 //    int removeUserByUserid(int userid);
 }

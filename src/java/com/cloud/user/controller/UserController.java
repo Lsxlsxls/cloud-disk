@@ -168,5 +168,23 @@ public class UserController {
         return "showAllUsers";
     }
 
+    @RequestMapping(value = "/search")
+    public String search(String text, String username, HttpServletRequest req, HttpSession session) {
 
+        text = "%" + text + "%";
+        System.out.println("查询文本    " + text);
+
+//        Users user = userService.getUserByName(username);
+//
+//        req.getParameter("username");
+
+        List<Users> usersFind = userService.findUsersByName(text, username);
+        System.out.println("size   --- " + usersFind.size());
+
+        session.setAttribute("users", username);
+
+        req.setAttribute("userList", usersFind);
+
+        return "showAllUsers";
+    }
 }

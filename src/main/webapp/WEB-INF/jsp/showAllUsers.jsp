@@ -1,8 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -18,41 +18,53 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    -->
 	<style type="text/css">
-		a{text-decoration: none}
-		table{width: 100%}
-		table,tr,th{border: 1px solid gray;border-collapse:collapse;}
-		div{border: 0px solid red;}
+		a {
+			text-decoration: none
+		}
+
+		table {
+			width: 100%
+		}
+
+		table, tr, th {
+			border: 1px solid gray;
+			border-collapse: collapse;
+		}
+
+		div {
+			border: 0px solid red;
+		}
 	</style>
 	<script src="js/jquery-1.8.3.js" type="text/javascript"></script>
 	<script type="text/javascript">
 
-        $(function(){
+        $(function () {
             //表格隔行变色
-            $("table>tbody>tr:even").css("background","gray");
-            $("table>tbody>tr:odd").css("background","pink");
+            $("table>tbody>tr:even").css("background", "gray");
+            $("table>tbody>tr:odd").css("background", "pink");
         });
 
         function sc() {
-            $("#file").click().change(function() {
+            $("#file").click().change(function () {
                 //原来的图片名称
                 var photo_name = $("#personal_photo").attr("src").substr(7);//获取当前显示的图片的名称
                 $.ajax({
-                    type : "post",
-                    url : "file/personalPhoto_upload?photo_name="+photo_name,
+                    type: "post",
+                    url: "file/personalPhoto_upload?photo_name=" + photo_name,
                     //dataType:"json",
-                    enctype : "multipart/form-data",
-                    data : new FormData($("#uploadForm")[0]),//新的文件对象（新的图片名称）
-                    processData : false, //data的值是FormData对象，不需要对数据进行处理
-                    contentType : false, //FormData对象由form表单构建
-                    cache : false,
+                    enctype: "multipart/form-data",
+                    data: new FormData($("#uploadForm")[0]),//新的文件对象（新的图片名称）
+                    processData: false, //data的值是FormData对象，不需要对数据进行处理
+                    contentType: false, //FormData对象由form表单构建
+                    cache: false,
                     //成功回调函数
-                    success : function(msg) {
+                    success: function (msg) {
                         //alert("msg:   "+msg)
                         /* alert(msg+"   传回来的文件名称"); *///msg----文件名
-                        $("#personal_photo").attr("src","upload/" + msg);
+                        $("#personal_photo").attr("src", "upload/" + msg);
                     }
                 });
             });
@@ -68,7 +80,23 @@
 </form>
 ${user.username}先生/女士，欢迎您,
 <a style="margin-left: 1050px" href="user/logout">【退出】</a></span><br/><br/><br/>
-<hr style="width: 100%" />
+<hr style="width: 100%"/>
+
+
+<div class="col-md-4">
+	<form class="bs-example bs-example-form" action="/user/search?username=${user.username}" method="post" role="form">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="input-group" style="width: 200px;">
+					<input type="text" name="text" class="form-control" placeholder="搜索用户"
+						   style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;">
+					<button class="btn btn-default" type="submit">Go!</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
 <table>
 	<thead>
 	<tr>
@@ -91,13 +119,15 @@ ${user.username}先生/女士，欢迎您,
 			<th>${user.password}</th>
 			<th>${user.sex}</th>
 			<th>
-				<button onclick="javaScript:location.href='user/removeUserByUserid/${user.userid}?pageNum=${pageInfo.pageNum}&maxPage=${pageInfo.pages}'">删除</button>
+				<button onclick="javaScript:location.href='user/removeUserByUserid/${user.userid}?pageNum=${pageInfo.pageNum}&maxPage=${pageInfo.pages}'">
+					删除
+				</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<button onclick="modifyUser_passByUserid(${user.userid})">修改</button>
+				<button onclick="modifyUser_passByUserid(${user.userid})">修改密码</button>
 				<script>
-                    function modifyUser_passByUserid(userid){
-                        var newPass=prompt("请输入新密码","请认真填写");
-                        location.href="user/modifyUser_passByUserid?userid="+userid+"&newPass="+newPass+"&pageNum=${pageInfo.pageNum}&maxPage=${pageInfo.pages}";
+                    function modifyUser_passByUserid(userid) {
+                        var newPass = prompt("请输入新密码", "请认真填写");
+                        location.href = "user/modifyUser_passByUserid?userid=" + userid + "&newPass=" + newPass + "&pageNum=${pageInfo.pageNum}&maxPage=${pageInfo.pages}";
                     }
 				</script>
 
@@ -107,7 +137,7 @@ ${user.username}先生/女士，欢迎您,
 	</tbody>
 </table>
 <center>
-	当前第${pageInfo.pageNum}页/总共${pageInfo.pages}页  ，
+	当前第${pageInfo.pageNum}页/总共${pageInfo.pages}页 ，
 	<a href="user/getAllUsers?pageNum=${pageInfo.pageNum-1}&maxPage=${pageInfo.pages}">上一页</a>
 	<a href="user/getAllUsers?pageNum=${pageInfo.pageNum+1}&maxPage=${pageInfo.pages}">下一页</a>
 </center>

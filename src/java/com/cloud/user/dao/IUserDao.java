@@ -31,6 +31,9 @@ public interface IUserDao {
     @Update("update cloudpan.users3 set password=#{password} where userid=#{userid}")
     public int modifyUser_passByUserid(Users user);
 
+    @Select("select * from cloudpan.users3 where username like #{text}")
+    public List<Users> findUsersByName(@Param("text") String text, @Param("username") String username);
+
 
 //    // where username!=#{username}
 //    @Select("select * from users")

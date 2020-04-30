@@ -53,6 +53,11 @@ public class UserServiceimpl implements IUserService {
         return userDao.modifyUser_passByUserid(user);
     }
 
+    @Override
+    public List<Users> findUsersByName(String text, String username) {
+        return userDao.findUsersByName(text,username);
+    }
+
 
     // 依赖注入---不用在new对象，都由spring提供，并且默认都是单例
 
